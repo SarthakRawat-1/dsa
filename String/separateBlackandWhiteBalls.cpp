@@ -1,7 +1,7 @@
 // Problem Statement :- https://leetcode.com/problems/separate-black-and-white-balls/?envType=daily-question&envId=2024-10-15
 
 // Say, you have s = "10" 
-// We have to move 0 to left and 1 to right. Starting from first index, we see it's 1 and we move to first index, it is 0. Now, we got to know that before this 0, we have seen 1 appear one times. But 0 has to come on left side. There can't be any 1 to the left of any 0. So, we need one swap here.
+// We have to move 0 to left and 1 to right. Starting from zero index, we see it's 1 and we move to first index, it is 0. Now, we got to know that before this 0, we have seen 1 appear one times. But 0 has to come on left side. There can't be any 1 to the left of any 0. So, we need one swap here.
 // Now, say you have :- s = "110"
 // Before the 0, we have seen 1 two times, so we will have to move 0 to left 2 times. Hence, 2 swaps.
 // Finally, we have :- s = "1101"
