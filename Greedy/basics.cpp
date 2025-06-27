@@ -1,0 +1,2 @@
+// Greedy is a problem solving approach that makes a sequence of choices, each of which looks best at that moment.
+// This method aims to find global optimal solution by making series of locally optimal choices.

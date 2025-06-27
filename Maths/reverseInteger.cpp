@@ -13,6 +13,9 @@ int reverse(int x) {
     while (x) {
         rem = x % 10; // Extract the last digit
         x /= 10; // Remove the last digit
+
+        if (ans > INT_MAX/10 || ans < INT_MIN/10) return 0; // Condition to rectify Integer Overflow.
+
         ans = ans * 10 + rem; // Add the extracted digit to reversed number.
     }
 

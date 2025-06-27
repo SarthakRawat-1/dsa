@@ -1,5 +1,9 @@
 // Problem Statement :- https://leetcode.com/problems/break-a-palindrome/description/
 
+// We will simply replace the first non-'a' character with 'a' and return the modified string. If all characters are 'a', we will replace the last character with 'b' and return the modified string.
+// What if we have :- aabaa, in this case, if we change the first non-'a' character to 'a', it will become aaaaa, which is a palindrome. This happens because for odd length strings, if we change the middle charcacter, it will remain a palindrome. Hence, in this case also, we will change last character to 'b'.
+// We will only check the first half of the string. This is because the second half is a mirror image of the first half. This will also help in simplifying the code for previous case, i.e. odd length and middle character to be changed. 
+
 #include <bits/stdc++.h>
 #include <string>
 using namespace std;
@@ -24,7 +28,6 @@ string breakPalindrome(string pal) {
     pal[n - 1] = 'b';
     return pal; // Return the modified string
 }
-
 
 int main() {
     // Test cases

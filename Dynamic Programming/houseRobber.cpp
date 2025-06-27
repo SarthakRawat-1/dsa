@@ -49,74 +49,74 @@ int rob(vector<int>& nums) {
 
 // Bottom Up Approach (Iterative + Tabulation)
 // This approach solves the problem iteratively by filling up the DP table from the base cases.
-// int rob(vector<int>& nums) {
-//     int n = nums.size();
+int rob(vector<int>& nums) {
+    int n = nums.size();
 
-//     // Edge case: If there is only one house, rob it.
-//     if (n == 1) {
-//         return nums[0];
-//     }
+    // Edge case: If there is only one house, rob it.
+    if (n == 1) {
+        return nums[0];
+    }
 
-//     // Edge case: If there are two houses, rob the one with more money.
-//     if (n == 2) {
-//         return max(nums[0], nums[1]);
-//     }
+    // Edge case: If there are two houses, rob the one with more money.
+    if (n == 2) {
+        return max(nums[0], nums[1]);
+    }
 
-//     // Initialize the DP table with -1.
-//     vector<int> dp(n, -1);
+    // Initialize the DP table with -1.
+    vector<int> dp(n, -1);
 
-//     // Base case: The maximum amount that can be robbed from the first house is nums[0].
-//     dp[0] = nums[0];
+    // Base case: The maximum amount that can be robbed from the first house is nums[0].
+    dp[0] = nums[0];
 
-//     // Base case: The maximum amount that can be robbed from the first two houses is the maximum of nums[0] and nums[1].
-//     dp[1] = max(nums[0], nums[1]);
+    // Base case: The maximum amount that can be robbed from the first two houses is the maximum of nums[0] and nums[1].
+    dp[1] = max(nums[0], nums[1]);
 
-//     // Fill the DP table iteratively.
-//     for (int i = 2; i < n; i++) {
-//         // The maximum amount that can be robbed up to the i-th house is the maximum of:
-//         // 1. Robbing the i-th house and adding it to the maximum amount robbed up to the (i-2)-th house.
-//         // 2. Skipping the i-th house and taking the maximum amount robbed up to the (i-1)-th house.
-//         dp[i] = max(nums[i] + dp[i - 2], dp[i - 1]);
-//     }
+    // Fill the DP table iteratively.
+    for (int i = 2; i < n; i++) {
+        // The maximum amount that can be robbed up to the i-th house is the maximum of:
+        // 1. Robbing the i-th house and adding it to the maximum amount robbed up to the (i-2)-th house.
+        // 2. Skipping the i-th house and taking the maximum amount robbed up to the (i-1)-th house.
+        dp[i] = max(nums[i] + dp[i - 2], dp[i - 1]);
+    }
 
-//     // The last element in the DP table will contain the maximum amount that can be robbed from all houses.
-//     return dp[n - 1];
-// }
+    // The last element in the DP table will contain the maximum amount that can be robbed from all houses.
+    return dp[n - 1];
+}
 
 // Space Optimized Approach
 // This approach optimizes space by using only two variables to store the results of the previous two houses.
-// int rob(vector<int>& nums) {
-//     int n = nums.size();
+int rob(vector<int>& nums) {
+    int n = nums.size();
 
-//     // Edge case: If there is only one house, rob it.
-//     if (n == 1) {
-//         return nums[0];
-//     }
+    // Edge case: If there is only one house, rob it.
+    if (n == 1) {
+        return nums[0];
+    }
 
-//     // Edge case: If there are two houses, rob the one with more money.
-//     if (n == 2) {
-//         return max(nums[0], nums[1]);
-//     }
+    // Edge case: If there are two houses, rob the one with more money.
+    if (n == 2) {
+        return max(nums[0], nums[1]);
+    }
 
-//     int curr;        // Represents the maximum amount that can be robbed up to the current house.
-//     int prev = max(nums[0], nums[1]);  // Represents the maximum amount that can be robbed up to the previous house.
-//     int prev2 = nums[0];               // Represents the maximum amount that can be robbed up to the house before the previous one.
+    int curr;        // Represents the maximum amount that can be robbed up to the current house.
+    int prev = max(nums[0], nums[1]);  // Represents the maximum amount that can be robbed up to the previous house.
+    int prev2 = nums[0];               // Represents the maximum amount that can be robbed up to the house before the previous one.
 
-//     // Iterate through the houses starting from the third house.
-//     for (int i = 2; i < n; i++) {
-//         // The maximum amount that can be robbed up to the i-th house is the maximum of:
-//         // 1. Robbing the i-th house and adding it to the maximum amount robbed up to the (i-2)-th house.
-//         // 2. Skipping the i-th house and taking the maximum amount robbed up to the (i-1)-th house.
-//         curr = max(nums[i] + prev2, prev);
+    // Iterate through the houses starting from the third house.
+    for (int i = 2; i < n; i++) {
+        // The maximum amount that can be robbed up to the i-th house is the maximum of:
+        // 1. Robbing the i-th house and adding it to the maximum amount robbed up to the (i-2)-th house.
+        // 2. Skipping the i-th house and taking the maximum amount robbed up to the (i-1)-th house.
+        curr = max(nums[i] + prev2, prev);
 
-//         // Update the variables for the next iteration.
-//         prev2 = prev;
-//         prev = curr;
-//     }
+        // Update the variables for the next iteration.
+        prev2 = prev;
+        prev = curr;
+    }
 
-//     // The 'curr' variable will contain the maximum amount that can be robbed from all houses.
-//     return curr;
-// }
+    // The 'curr' variable will contain the maximum amount that can be robbed from all houses.
+    return curr;
+}
 
 int main() {
     vector<int> nums = {1, 2, 3, 1};

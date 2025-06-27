@@ -43,7 +43,8 @@ using namespace std;
 //     return true;
 // }
 
-// Optimal Approach - 
+// Optimal Approach - This can be simplified further. First count all mismatch and store all of the mismatch indices in a vector. 
+// If the vector size is 0, strings are equal. If it's 2, check if swapping elements at both indices make string equal. For anything else simply return false.
 bool areAlmostEqual(string s1, string s2) {
     int n = s1.length();
 
@@ -73,6 +74,9 @@ bool areAlmostEqual(string s1, string s2) {
             }
         }
     }
+
+    // Ensure exactly two differences before accessing indices
+    if (diffs != 2) return false;
 
     // Ensure that swapping the two differing characters results in equality
     return s1[firstIdx] == s2[secondIdx] && s1[secondIdx] == s2[firstIdx];

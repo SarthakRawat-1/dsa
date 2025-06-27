@@ -1,5 +1,8 @@
 // Problem Staement :- https://leetcode.com/problems/boats-to-save-people/description/
 
+// We will first sort the people array in ascending order. This way, we can pair the lightest person with the heaviest person.
+// Hence, we will need two pointers, i and j, to track the lightest and heaviest person respectively.
+
 #include <bits/stdc++.h>
 using namespace std;
 

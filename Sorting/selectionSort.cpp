@@ -16,8 +16,8 @@ void selection_sort(int arr[], int n) {
         int mini = i;
 
         // Inner loop: This searches for the smallest element in the unsorted part of the array.
-        // Starts from 'i' and goes till the end of the array.
-        for (int j = i; j < n; j++) {
+        // Starts from 'i + 1' and goes till the end of the array. Does not start from i because we have already assumed it to be mini, so comparing it is useless.
+        for (int j = i + 1; j < n; j++) {
             // If we find an element smaller than the current minimum, update 'mini' to this new index.
             if (arr[j] < arr[mini]) {
                 mini = j;  // Update the index of the smallest element.

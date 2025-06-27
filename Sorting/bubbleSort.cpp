@@ -15,6 +15,7 @@ void bubble_sort(int arr[], int n) {
         
         // Inner loop: Compare adjacent elements up to index 'i'
         // Elements beyond 'i' are already sorted, so we don't need to check them.
+        // j <= i - 1 and not j <= i because inside the for loop we are using j + 1, which for the first iteration where i is the last element will not be a valid address for an element in array.
         for (int j = 0; j <= i - 1; j++) {
             
             // If the current element is greater than the next, swap them

@@ -7,7 +7,7 @@
 
 using namespace std;
 
-// Function to merge two sorted halves of the array
+// Function to merge two sorted halves of the array. Notice it takes vector by reference.
 void merge(vector<int> &arr, int low, int mid, int high) {
     vector<int> temp; // Temporary vector to store the merged result.
 
@@ -51,7 +51,7 @@ void merge(vector<int> &arr, int low, int mid, int high) {
     }
 }
 
-// Recursive function to perform Merge Sort. This will be used to split the array in left and right half as well as calling merge to sort the array and merge the sorted arrays.
+// Recursive function to perform Merge Sort. This will be used to split the array in left and right half as well as calling merge to sort the array and merge the sorted arrays. Notice it takes vector by reference.
 void mergeSort(vector<int> &arr, int low, int high) { // Initially low and high will point to first and last element of the array.
 
     if (low >= high) return; // Base case: if the array has one or zero elements, low will become equal to high or greater than that. As in this case, a single element or zero element is already sorted so jsut return.

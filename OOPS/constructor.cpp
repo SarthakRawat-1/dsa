@@ -1,4 +1,4 @@
-// Constructor is a special fucntion which is invoked autoamtically at the time of object creation. It's name will be same as the Class name. It doesn't havea ny return type. It is used to intiialize values.
+// Constructor is a special function which is invoked automatically at the time of object creation. It's name will be same as the Class name. It doesn't havea ny return type. It is used to intiialize values.
 // You can make multiple Constructors. 
 // A default constructor is a constructor that either takes no parameters or has all of its parameters with default values. It is automatically provided by the compiler if no other constructor is defined. If you define any constructor yourself, and by any it means ANY CONSTRUCTOR, the compiler will no longer generate a default constructor unless you explicitly define one. Its purpose is to initialize the object with default values.
 // A parameterized constructor is a constructor that takes one or more parameters. It allows passing specific values to initialize the object when it is created. This is useful when you want to initialize an object with custom data rather than default values.

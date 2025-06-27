@@ -74,6 +74,118 @@ int rob(vector<int>& nums) {
     return max(case1, case2);
 }
 
+// Top Down Approach
+// Helper function for the Top Down Approach
+int RobberTopDown(int index, vector<int>& nums, int start, vector<int>& dp) {
+    // Base case: If we are at the first house, we can only rob this house.
+    if (index == start) {
+        return nums[start];
+    }
+
+    // Base case: If we are at the second house, we can rob either the first or the second house.
+    if (index == start + 1) {
+        return max(nums[start], nums[start + 1]);
+    }
+
+    // If the result for the current index is already computed, return it from the DP table.
+    if (dp[index - start] != -1) {
+        return dp[index - start];
+    }
+
+    // Recursive case: Choose the maximum between robbing the current house and skipping the previous house,
+    // or skipping the current house and robbing the previous house.
+    return dp[index - start] = max(nums[index] + RobberTopDown(index - 2, nums, start, dp), RobberTopDown(index - 1, nums, start, dp));
+}
+
+int rob(vector<int>& nums) {
+    int n = nums.size();
+
+    // Edge case: If there is only one house, rob it.
+    if (n == 1) {
+        return nums[0];
+    }
+
+    // Edge case: If there are two houses, rob the one with more money.
+    if (n == 2) {
+        return max(nums[0], nums[1]);
+    }
+
+    // Initialize the DP table with -1 to indicate that no results have been computed yet.
+    vector<int> dp(n, -1);
+
+    // Case 1: Ignore the last house and solve for houses 0 to n-2.
+    int case1 = RobberTopDown(n - 2, nums, 0, dp);
+
+    // Reset the DP table for the next case.
+    fill(dp.begin(), dp.end(), -1);
+
+    // Case 2: Ignore the first house and solve for houses 1 to n-1.
+    int case2 = RobberTopDown(n - 1, nums, 1, dp);
+
+    // The final answer is the maximum of the two cases.
+    return max(case1, case2);
+}
+
+// Bottom Up Approach
+// Helper function for the Bottom Up Approach
+int RobberBottomUp(vector<int>& nums, int start, int end) {
+    int n = end - start + 1;
+
+    // Edge case: If there is only one house, rob it.
+    if (n == 1) {
+        return nums[start];
+    }
+
+    // Edge case: If there are two houses, rob the one with more money.
+    if (n == 2) {
+        return max(nums[start], nums[start + 1]);
+    }
+
+    // Initialize the DP table with -1.
+    vector<int> dp(n, -1);
+
+    // Base case: The maximum amount that can be robbed from the first house is nums[start].
+    dp[0] = nums[start];
+
+    // Base case: The maximum amount that can be robbed from the first two houses is the maximum of nums[start] and nums[start + 1].
+    dp[1] = max(nums[start], nums[start + 1]);
+
+    // Fill the DP table iteratively.
+    for (int i = 2; i < n; i++) {
+        // The maximum amount that can be robbed up to the i-th house is the maximum of:
+        // 1. Robbing the i-th house and adding it to the maximum amount robbed up to the (i-2)-th house.
+        // 2. Skipping the i-th house and taking the maximum amount robbed up to the (i-1)-th house.
+        dp[i] = max(nums[start + i] + dp[i - 2], dp[i - 1]);
+    }
+
+    // The last element in the DP table will contain the maximum amount that can be robbed from the given range of houses.
+    return dp[n - 1];
+}
+
+// Main function for the Bottom Up Approach
+int rob(vector<int>& nums) {
+    int n = nums.size();
+
+    // Edge case: If there is only one house, rob it.
+    if (n == 1) {
+        return nums[0];
+    }
+
+    // Edge case: If there are two houses, rob the one with more money.
+    if (n == 2) {
+        return max(nums[0], nums[1]);
+    }
+
+    // Case 1: Ignore the last house and solve for houses 0 to n-2.
+    int case1 = RobberBottomUp(nums, 0, n - 2);
+
+    // Case 2: Ignore the first house and solve for houses 1 to n-1.
+    int case2 = RobberBottomUp(nums, 1, n - 1);
+
+    // The final answer is the maximum of the two cases.
+    return max(case1, case2);
+}
+
 int main() {
     vector<int> nums = {2, 3, 2};
     int result = rob(nums);

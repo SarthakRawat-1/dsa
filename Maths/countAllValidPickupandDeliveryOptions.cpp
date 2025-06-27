@@ -24,7 +24,7 @@ int countOrders(int n) {
         result *= possibilities; // Same Logic as explained above, when I was explaining n = 3
     }
 
-    return result; // For the leetcode problem, you need to return result %1e9+7 instead as it is demanded in the Problem Statement.
+    return result; // Return the total number of ways
 }
 
 int main() {
