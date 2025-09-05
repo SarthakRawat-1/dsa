@@ -22,3 +22,9 @@ int main() {
     cout << isPowerOfFour(n) << endl;
     return 0;
 }
+
+// If you want to solve it like powerofThree.cpp
+// bool isPowerOfFour(int n) {
+//     return n > 0 && 1073741824 % n == 0 && n % 3 == 1;
+// }
+// Checking n % 3 == 1 because the first two checks works for even divisble by 2 but not by 4.

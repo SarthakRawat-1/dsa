@@ -24,6 +24,7 @@ vector<int> nextGreaterElements(vector<int>& nums) {
         // Push the current index onto the stack
         st.push(i % n);
     }
+    
     return nge;
 }
 

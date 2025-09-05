@@ -1,7 +1,6 @@
 // Problem Statement :- https://leetcode.com/problems/kth-smallest-element-in-a-bst/description/
 
-#include <iostream>
-using namespace std;
+// Pretty much same as KthLargestElementinBST.cpp but we can do standard Inorder traversal in this instead of RNL
 
 #include <iostream>
 using namespace std;

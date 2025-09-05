@@ -200,6 +200,41 @@ int trap(vector<int>& height) {
     return water;  // Return the total trapped water.
 }
 
+// Stack Approach
+int trap(vector<int>& height) {
+    int n = height.size();
+    int water = 0;              // Total trapped water
+    stack<int> st;              // Stack to store indices of bars (monotonic decreasing stack)
+
+    // Traverse all bars one by one
+    for (int i = 0; i < n; i++) {
+
+        // While current bar is taller than the bar at top of stack
+        // → means we found a "right boundary" to trap water
+        while (!st.empty() && height[i] > height[st.top()]) {
+
+            int bottom = st.top();   // The "valley" index (potential water bottom)
+            st.pop();                // Remove it to calculate water
+
+            if (st.empty()) break;   // No left boundary → cannot trap water
+
+            int left = st.top();     // New left boundary index after popping
+            int distance = i - left - 1;  // Width between left and current bar
+            int boundedHeight = min(height[i], height[left]) - height[bottom];
+            // Water height = bounded by shorter of (current bar, left bar)
+            // minus the height of the valley (bottom)
+
+            water += distance * boundedHeight;  // Add trapped water
+        }
+
+        // Push current bar index to stack
+        // It might be a future "left boundary" for trapping water
+        st.push(i);
+    }
+
+    return water;  // Return total trapped water
+}
+
 int main() {
     vector <int> height = {4, 2, 0, 5, 2, 6, 2, 3};
 

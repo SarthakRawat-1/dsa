@@ -3,7 +3,7 @@
 // If we can't find a row to place a queen, we won't go to the next row, as we have to place queens in each row.
 // Whenever we place a queen,w e can solve the queen being in same row problem quite easily, as every new iteration will ensure that.
 // For same column problem, we can take an array to indicate if there are already queens in that column.
-//
+
 
 #include <bits/stdc++.h>
 using namespace std;

@@ -1,4 +1,4 @@
-// Problem Statement :- https://www.naukri.com/code360/problems/next-smaller-element_1112581
+// Problem Statement :- https://takeuforward.org/plus/dsa/problems/next-smaller-element
 
 // This problem is similar to finding the next greater element, but instead, we need to find the next smaller element.
 // The goal is to determine the closest smaller element to the right for each element in the array.

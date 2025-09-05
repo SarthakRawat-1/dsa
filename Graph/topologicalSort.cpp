@@ -2,7 +2,7 @@
 // Topological sort can only be performed on a DAG because in Undirected Graphs we can't confirm which vertex will come before and which after.
 // The reason we need acyclic is that if we have cyclic graph, we have a loop which will create conflicts on which vertex is coming before.
 
-// Topological Sort is an ordering of the vertices of a directed acyclic graph (DAG) such that for every directed edge u→vu→v, vertex uu comes before vv in the ordering.
+// Topological Sort is an ordering of the vertices of a directed acyclic graph (DAG) such that for every directed edge u→v, vertex u comes before v in the ordering.
 // Let's say we have an edge u -> v, then u should be ordered before v.
 // For eg :- If we have a graph :- 0 -> 1 -> 3   
                             //     ↓         ↑
@@ -19,7 +19,7 @@
 // But our ans should be :- {4, 5, 0, 1, 2, 3}. If we had put {4, 5} in the front we would have got our answer.
 // But this will increase Time complexity and even more so for more complex graphs. Instead of a vector array, we can use a Stack.
 
-// Using a Stack, we will do DFS as usual, visisted array will also be marked as usual. But as soon as we encounter a vertex, we are not going to put it in Stack, for every vertex, we will put the vertices dependent on that first inside the Stack (this is followed for subsequent vertices as well). 
+// Using a Stack, we will do DFS as usual, visited array will also be marked as usual. But as soon as we encounter a vertex, we are not going to put it in Stack, for every vertex, we will put the vertices dependent on that first inside the Stack (this is followed for subsequent vertices as well). 
 // Dependence basically means that where the vertex is directing to, so in our eg, for 0, 1 is dependent on 0.
 // After 0, we will arrive on 1 but as 2 is dependent on 1, similarly 3 is dependent on 2, so finally 3 will go first in Stack. Now as 3 is already inside Stack, so now 2 can also go inside Stack. Similarly 1 and 0 will also go in Stack.
 // Similarly, 5 will be inserted in Stack before 4. Stack in end when all vertices are visited :- {4, 5, 0, 1, 2, 3} where 4 is at the top and 3 is at the bottom.
@@ -55,6 +55,7 @@ vector<int> topoSort(int V, vector<int> adj[]) {
     stack<int> st;
 
     // Perform DFS for all nodes to ensure all nodes are visited
+    // We need to do this, as we may have Graph islands.
     for (int i = 0; i < V; i++) {
         // If the node is not visited, apply DFS on it
         if (!visited[i]) {

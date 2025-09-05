@@ -40,89 +40,96 @@ public:
         return last;
     }
 
-    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        // Step 1: Reverse both input linked lists to simplify addition.
-        l1 = reverseLL(l1);
-        l2 = reverseLL(l2);
+ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+    // Step 1: Reverse both lists so addition starts from least significant digit.
+    l1 = reverseLL(l1);
+    l2 = reverseLL(l2);
 
-        int sum = 0, carry = 0;  // Initialize variables for the sum and carry.
-        ListNode* ans = new ListNode(); // Create a dummy node for the result.
+    int carry = 0;              // To store carry after each digit addition
+    ListNode* ans = nullptr;    // Head of the result list (built in reverse)
 
-        // Step 2: Iterate through both linked lists until all nodes are processed.
-        while (l1 != NULL || l2 != NULL) {
-            if (l1) { 
-                sum += l1->val; // Add the value of the current node from l1.
-                l1 = l1->next;  // Move to the next node in l1.
-            }
-            if (l2) {
-                sum += l2->val; // Add the value of the current node from l2.
-                l2 = l2->next;  // Move to the next node in l2.
-            }
+    // Step 2: Process both lists until all digits and carry are consumed
+    while (l1 || l2 || carry) {
+        int sum = carry;        // Start with any leftover carry from previous step
 
-            // Step 3: Calculate the digit to store in the current node and the carry.
-            ans->val = sum % 10; // Store the unit digit of the sum in the current node.
-            carry = sum / 10;    // Compute the carry for the next iteration.
-
-            // Step 4: Create a new node for the carry and link it to the current result.
-            ListNode* newNode = new ListNode(carry); // Create a new node with the carry value.
-            newNode->next = ans; // Point the new node to the current head of the result list.
-            ans = newNode;       // Update the head of the result list to the new node.
-
-            sum = carry; // Reset the sum to carry for the next iteration.
+        // Add l1's digit if available
+        if (l1) {
+            sum += l1->val;
+            l1 = l1->next;
         }
 
-        // Step 5: If there's no carry left, skip the dummy node and return the actual result.
-        return carry == 0 ? ans->next : ans;
+        // Add l2's digit if available
+        if (l2) {
+            sum += l2->val;
+            l2 = l2->next;
+        }
+
+        // Step 3: Extract digit and new carry
+        carry = sum / 10;       // Carry for next iteration
+        int digit = sum % 10;   // Current digit to store in result
+
+        // Step 4: Create new node for this digit
+        // Prepend to the result (since we're building from least significant digit upward)
+        ListNode* newNode = new ListNode(digit);
+        newNode->next = ans;
+        ans = newNode;
     }
+
+    // Step 5: Return the head of the result list
+    return ans;
+}
+
 };
 
 //Approach-2 (Using Stack) - What if you cannot modify the input lists? In other words, reversing the lists is not allowed. 
 // class Solution {
 // public:
-//     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-//         // Stacks to store the values of the nodes in reverse order
-//         stack<int> s1, s2;
+ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        // Step 1: Push all digits of l1 and l2 into stacks
+        // This reverses the order so we can add from least significant digit
+        stack<int> s1, s2;
+        while (l1) {
+            s1.push(l1->val);
+            l1 = l1->next;
+        }
+        while (l2) {
+            s2.push(l2->val);
+            l2 = l2->next;
+        }
 
-//         // Traverse the first linked list and push values onto stack s1
-//         while (l1 != NULL) {
-//             s1.push(l1->val); // Push the current node's value onto the stack
-//             l1 = l1->next;    // Move to the next node
-//         }
+        int carry = 0;              // To store carry during addition
+        ListNode* ans = nullptr;    // Head of the result list (will be built in correct order)
 
-//         // Traverse the second linked list and push values onto stack s2
-//         while (l2 != NULL) {
-//             s2.push(l2->val); // Push the current node's value onto the stack
-//             l2 = l2->next;    // Move to the next node
-//         }
+        // Step 2: Process until both stacks are empty AND no carry remains
+        while (!s1.empty() || !s2.empty() || carry) {
+            int sum = carry;        // Start with carry from previous step
 
-//         int sum = 0, carry = 0;         // Initialize sum and carry variables
-//         ListNode* ans = new ListNode(); // Create a dummy node for the result list
+            // Pop top value from s1 if available
+            if (!s1.empty()) {
+                sum += s1.top();
+                s1.pop();
+            }
 
-//         // Process the stacks until both are empty
-//         while (!s1.empty() || !s2.empty()) {
-//             if (!s1.empty()) {
-//                 sum += s1.top(); // Add the top value from stack s1 to sum
-//                 s1.pop();        // Remove the top element from stack s1
-//             }
-//             if (!s2.empty()) {
-//                 sum += s2.top(); // Add the top value from stack s2 to sum
-//                 s2.pop();        // Remove the top element from stack s2
-//             }
+            // Pop top value from s2 if available
+            if (!s2.empty()) {
+                sum += s2.top();
+                s2.pop();
+            }
 
-//             // Calculate the value for the current digit and the carry
-//             ans->val = sum % 10; // Extract the least significant digit
-//             carry = sum / 10;    // Calculate the carry for the next iteration
+            // Compute new carry and the digit for this place
+            carry = sum / 10;       // Carry to propagate to next digit
+            int digit = sum % 10;   // Current digit to store
 
-//             // Create a new node for the carry and link it to the result list
-//             ListNode* newNode = new ListNode(carry); // Node for the carry
-//             newNode->next = ans; // Link the new node to the front of the list
-//             ans = newNode;       // Update the head of the result list
-//             sum = carry;         // Reset sum to carry for the next iteration
-//         }
+            // Step 3: Create a new node with the digit
+            // and insert it at the front of the result list
+            ListNode* newNode = new ListNode(digit);
+            newNode->next = ans;
+            ans = newNode;
+        }
 
-//         // If there's no carry left, skip the dummy node and return the result
-//         return carry == 0 ? ans->next : ans;
-//     }
+        // Step 4: Return the head of the result list
+        return ans;
+    }
 // };
 
 // Helper function to print the linked list

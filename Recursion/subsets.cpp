@@ -72,6 +72,33 @@ vector<vector<int>> subsets(vector<int>& nums) {
     return result;
 }
 
+// For Subset Sum II, first sort the input array first → duplicates come together.
+// At each recursion level, when skipping an element, skip over all its duplicates.
+void generateSubsetsNoDup(int index, vector<int>& nums, vector<int>& current, vector<vector<int>>& result) {
+    if (index == nums.size()) {
+        result.push_back(current);  // record subset when end is reached
+        return;
+    }
+
+    // 1️⃣ Include nums[index]
+    current.push_back(nums[index]);
+    generateSubsetsNoDup(index + 1, nums, current, result);
+    current.pop_back();
+
+    // 2️⃣ Exclude nums[index] 🚫 but skip over duplicates
+    int next = index + 1;
+    while (next < nums.size() && nums[next] == nums[index]) next++;
+
+    generateSubsetsNoDup(next, nums, current, result);
+}
+
+vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+    sort(nums.begin(), nums.end()); // sort so duplicates are adjacent
+    vector<vector<int>> result;
+    vector<int> current;
+    generateSubsetsNoDup(0, nums, current, result);
+    return result;
+}
 
 int main() {
     

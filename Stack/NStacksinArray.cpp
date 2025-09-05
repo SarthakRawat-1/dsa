@@ -16,12 +16,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Problem Statement: Implement N stacks in a single array efficiently, supporting push and pop operations.
-// Approach: Use an array to store elements and linked lists to manage each stack's indices, along with a stack to track free indices.
-
-#include <bits/stdc++.h>
-using namespace std;
-
 // Node class to represent elements in each stack's linked list.
 // Each node stores an index in the main array and a pointer to the next node.
 class Node {

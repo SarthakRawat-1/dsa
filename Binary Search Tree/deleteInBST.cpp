@@ -120,6 +120,19 @@ Node *deleteNode(Node *root, int target) {
                 return child;  // Predecessor becomes the new subtree root
             }
         }
+        // Case 3 : Node has two children. Simplified approach
+        // else {
+        //     // Find the in-order predecessor (max value in the left subtree)
+        //     Node* predecessor = root->left;
+        //     while (predecessor->right) {
+        //         predecessor = predecessor->right;
+        //     }
+        //     // Replace the value of the node to be deleted with the predecessor's value
+        //     root->data = predecessor->data;
+        //     // Delete the predecessor
+        //     root->left = deleteNode(root->left, predecessor->data);
+        //     return root;
+        // }
     }
 }
 

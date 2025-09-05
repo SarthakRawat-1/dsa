@@ -78,7 +78,7 @@ int main() {
     cout << "Test 1 Before: "; printStack(test1);
     solver.sort(test1);
     cout << "Test 1 After:  "; printStack(test1);
-    cout << "Expected: 3 2 1\n\n";
+    cout << "Expected: 1 2 3\n\n";
 
     return 0;
 }

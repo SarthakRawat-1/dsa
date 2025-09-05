@@ -59,50 +59,31 @@ Node* BinaryTree() {
 // Method 1 :- Using Queue and Level Order Traversal
 // Function to compute the left view of a binary tree.
 // The left view contains the first node at each level of the tree when viewed from the left.
-vector<int> leftView(Node* root) {
-    // Queue to facilitate level-order traversal of the tree.
-    queue<Node*> q;
-    // Vector to store the result (left view of the tree).
+vector<int> rightSideView(Node* root) {
     vector<int> ans;
+    if (!root) return ans;
 
-    // If the tree is empty, return an empty vector.
-    if (root == NULL) {
-        return ans;
-    }
-
-    // Push the root node into the queue to start the traversal.
+    queue<Node*> q;
     q.push(root);
 
-    // Perform a level-order traversal.
     while (!q.empty()) {
-        // Add the first node of the current level to the result.
-        ans.push_back(q.front()->data);
-
-        // Get the number of nodes at the current level.
         int n = q.size();
 
-        // Process all nodes at the current level.
-        while (n--) {
-            // Remove the front node from the queue.
+        // Traverse all nodes of this level
+        for (int i = 0; i < n; i++) {
             Node* temp = q.front();
             q.pop();
 
-            // Add the left child of the current node to the queue, if it exists.
-            if (temp->left) {
-                q.push(temp->left);
-            }
+            // First node of this level (i == 0) -> left view
+            if (i == 0) ans.push_back(temp->data);
 
-            // Add the right child of the current node to the queue, if it exists.
-            if (temp->right) {
-                q.push(temp->right);
-            }
+            if (temp->left) q.push(temp->left);
+            if (temp->right) q.push(temp->right);
         }
     }
 
-    // Return the computed left view.
     return ans;
 }
-
 
 // Method 2 :- Using Recursion
 // It traverses the tree in pre-order fashion (Root-Left-Right) and captures the first node at each level.

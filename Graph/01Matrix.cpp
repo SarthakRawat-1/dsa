@@ -3,52 +3,59 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+int m, n;  
+typedef pair<int, int> P;  
+
+// Four possible directions (right, left, up, down)
+vector<vector<int>> directions{{0, 1}, {0, -1}, {-1, 0}, {1, 0}};
+
 vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
-    int m = mat.size();    // Number of rows
-    int n = mat[0].size(); // Number of columns
+    m = mat.size();       // number of rows
+    n = mat[0].size();    // number of columns
     
-    // Directions for the four possible movements: up, down, left, right
-    vector<pair<int, int>> directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+    queue<P> que;         // BFS queue to process cells
+    vector<vector<int>> dist(m, vector<int>(n, -1)); // result matrix initialized with -1 (unvisited)
     
-    // Initialize a queue for BFS and a result matrix
-    queue<pair<int, int>> q;
-    
-    // Step 1: Initialize the result matrix and enqueue all 0s
-    vector<vector<int>> dist(m, vector<int>(n, -1)); // -1 indicates unvisited
+    // Step 1: Push all 0-cells into the queue as starting points
+    //         and mark their distance as 0
     for (int i = 0; i < m; i++) {
         for (int j = 0; j < n; j++) {
             if (mat[i][j] == 0) {
-                dist[i][j] = 0;  // Distance to itself is 0
-                q.push({i, j});   // Enqueue the 0 cell
+                dist[i][j] = 0;    // distance from 0 to itself = 0
+                que.push({i, j}); // enqueue this zero cell
             }
         }
     }
-
-    // Step 2: Perform BFS
-    while (!q.empty()) {
-        // Get the current cell from the queue
-        int x = q.front().first;
-        int y = q.front().second;
-        q.pop(); // Remove the front element from the queue
+    
+    // Lambda function to check matrix bounds (valid index check)
+    auto isSafe = [](int& i, int& j, int& m, int& n) {
+        return i >= 0 && i < m && j >= 0 && j < n;
+    };
+    
+    // Step 2: Multi-source BFS traversal
+    while (!que.empty()) {
+        P p = que.front();
+        que.pop();
         
-        // Explore all four neighbors
-        for (auto& dir : directions) {
-            int newX = x + dir.first;  // New row position
-            int newY = y + dir.second; // New column position
+        // Explore all four neighbors of current cell
+        for (auto &dir : directions) {
+            int i = p.first  + dir[0];
+            int j = p.second + dir[1];
             
-            // Check if the new position is within bounds
-            if (newX >= 0 && newX < m && newY >= 0 && newY < n) {
-                // If the neighbor has not been visited (i.e., distance is still -1)
-                if (dist[newX][newY] == -1) {
-                    // Update the distance to the neighbor cell
-                    dist[newX][newY] = dist[x][y] + 1;
-                    q.push({newX, newY}); // Enqueue the neighbor for further exploration
+            // Check boundaries
+            if (isSafe(i, j, m, n)) {
+                // If this neighbor hasn't been visited yet
+                if (dist[i][j] == -1) {
+                    // Update its distance as current cell's distance + 1
+                    dist[i][j] = 1 + dist[p.first][p.second];
+                    // Enqueue it for further BFS expansion
+                    que.push({i, j});
                 }
             }
         }
     }
-
-    // Return the result matrix with the shortest distances
+    
+    // Step 3: Return final distance matrix
     return dist;
 }
 

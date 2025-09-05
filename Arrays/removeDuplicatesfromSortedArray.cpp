@@ -46,7 +46,7 @@ int main() {
 
 // Another approach of solving this would be using the two pointer approach.
 // Please note that it removes duplicate elements in place from the array, so the array is modified.
-// In this we will take a variable i as 0, then we use a for loop use a for loop by using a variable ‘j’ from 1 to length of the array. If arr[j] != arr[i], increase ‘i’ and update arr[i] == arr[j]. This is because at this, we got a unique element. 
+// In this we will take a variable i as 0, then we use a for loop by using a variable ‘j’ from 1 to length of the array. If arr[j] != arr[i], increase ‘i’ and update arr[i] == arr[j]. This is because at this, we got a unique element. 
 // After completion of the loop return i+1, i.e size of the array of unique elements.
 
 #include<bits/stdc++.h>  
